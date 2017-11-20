@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import { hashSync, compareSync } from 'bcrypt-nodejs';
 import jwt from 'jsonwebtoken';
-import constants from '../config/constants'
+import constants from '../config/constants';
 
 const UserSchema = new Schema({
   username: {

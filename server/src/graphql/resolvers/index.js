@@ -7,7 +7,8 @@ export default {
   Date: GraphQLDate,
   Query: {
     getTweet: TweetResolver.getTweet,
-    getTweets: TweetResolver.getTweets
+    getTweets: TweetResolver.getTweets,
+    me: UserResolver.me
   },
   Mutation: {
     createTweet: TweetResolver.createTweet,

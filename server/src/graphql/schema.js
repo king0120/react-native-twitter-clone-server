@@ -9,6 +9,17 @@ export default`
     token: String!
   }
 
+  type Me {
+    _id: ID!
+    email: String!
+    username: String
+    firstName: String
+    lastName: String
+    avatar: String
+    createdAt: Date!
+    updatedAt: Date!
+  }
+
   type Tweet {
     _id: ID!
     text: String!
@@ -30,6 +41,7 @@ export default`
   type Query {
     getTweet(_id: ID!): Tweet
     getTweets: [Tweet]
+    me: Me
   }
   
   type Mutation {

@@ -17,8 +17,6 @@ async function auth (req, res, next) {
     if (token != null) {
       const user = await decodeToken(token);
       req.user = user;
-    } else {
-      req.user = null;
     }
     return next();
   } catch (err) {

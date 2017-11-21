@@ -10,6 +10,14 @@ export default {
       throw err;
     }
   },
+  getUserTweets: async (_, args, {user}) => {
+    try {
+      await requireAuth(user);
+      return Tweet.find({user: user._id}).sort({createdAt: -1});
+    } catch (err) {
+      throw err;
+    }
+  },
   getTweets: async (_, args, {user}) => {
     try {
       await requireAuth(user);
@@ -20,8 +28,9 @@ export default {
   },
   createTweet: async (_, args, {user}) => {
     try {
+      console.log(user);
       await requireAuth(user);
-      return Tweet.create(args);
+      return Tweet.create({...args, user: user._id});
     } catch (err) {
       throw err;
     }
@@ -29,7 +38,15 @@ export default {
   updateTweet: async (_, {_id, ...rest}, {user}) => {
     try {
       await requireAuth(user);
-      return Tweet.findByIdAndUpdate(_id, rest, { new: true });
+      const tweet = Tweet.findOne({ _id, user: user._id });
+      if (!tweet) {
+        throw new Error('Not Found!');
+      }
+
+      Object.entries(rest).forEach(([key, value]) => {
+        tweet[key] = value;
+      });
+      return tweet.save();
     } catch (error) {
       throw error;
     }
@@ -37,7 +54,12 @@ export default {
   deleteTweet: async (_, {_id}, {user}) => {
     try {
       await requireAuth(user);
-      await Tweet.findByIdAndRemove(_id);
+      const tweet = Tweet.findOne({ _id, user: user._id });
+      if (!tweet) {
+        throw new Error('Not Found!');
+      }
+      await tweet.remove();
+
       return {
         message: 'Delete Successful!'
       };

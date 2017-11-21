@@ -19,12 +19,13 @@ export default {
       if (!user) {
         throw new Error("User doesn't exist!");
       }
-
       if (!user.authenticateUser(password)) {
         throw new Error('Incorrect Login Info');
       }
 
-      return user;
+      return {
+        token: user.createToken()
+      };
     } catch (error) {
       throw error;
     }

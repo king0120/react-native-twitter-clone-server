@@ -12,7 +12,7 @@ export default {
   },
   getUserTweets: async (_, args, {user}) => {
     try {
-      await requireAuth(user);
+      // await requireAuth(user);
       return Tweet.find({user: user._id}).sort({createdAt: -1});
     } catch (err) {
       throw err;
@@ -20,7 +20,7 @@ export default {
   },
   getTweets: async (_, args, {user}) => {
     try {
-      await requireAuth(user);
+      // await requireAuth(user);
       return Tweet.find({}).sort({createdAt: -1});
     } catch (err) {
       throw err;
